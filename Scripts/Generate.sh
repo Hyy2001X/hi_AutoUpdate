@@ -5,6 +5,9 @@ WORK=${GITHUB_WORKSPACE}
 OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 echo "Commit: ${GITHUB_SHA}"
+echo "========================================"
+git show ${GITHUB_SHA} | grep 'diff' | awk '{print $3}'
+echo "========================================"
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
