@@ -25,13 +25,14 @@ jobs:
 
     - name: Run Auto Generation Script
       run: |
+        sudo timedatectl set-timezone Asia/Shanghai
         bash $GITHUB_WORKSPACE/Scripts/Generate.sh
 
     - name: Upload OTA Package
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: output/*
+        file: OTA/*
         file_glob: true
         tag: OTA
         overwrite: true
