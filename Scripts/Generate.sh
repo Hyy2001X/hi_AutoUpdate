@@ -5,9 +5,6 @@ WORK=${GITHUB_WORKSPACE}
 OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 echo "Commit: ${GITHUB_SHA}"
-echo "========================================"
-git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}'
-echo "========================================"
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
@@ -19,11 +16,11 @@ do
 
 	if [[ $(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}') =~ ${TARGET_PATH} ]]
 	then
-		echo "Generating OTA for ${TARGET} ..."
+		echo "${TARGET}: Generating OTA version ${OTA_VERSION} ..."
 		mv -f OTA/${TARGET}.tar.gz OTA/${OTA_PKG}
 		echo "OTA Package: ${OTA_PKG}"
 	else
-		echo "Nothing to be generated"
+		echo "${TARGET}: Nothing to be generated"
 		rm -f OTA/${TARGET}.tar.gz
 	fi
 done
