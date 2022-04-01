@@ -9,11 +9,12 @@ cd /tmp/$1
 echo "Commit: ${GITHUB_SHA}
 
 ========================
-$(git show ${GITHUB_SHA})
 $(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}')
 ========================
 "
 cd -
+git pull
+ls -a -1
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
