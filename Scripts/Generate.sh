@@ -30,7 +30,8 @@ for i in $(seq 0 $(jq ".assets | length" API_Cache 2> /dev/null));do
 	esac
 done
 
-cat API_File
+env
+set
 
 mkdir -p OTA
 
