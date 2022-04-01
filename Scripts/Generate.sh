@@ -37,18 +37,17 @@ mkdir -p OTA
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
 do
 	TARGET=${TARGET_PATH/OTA_/}
-	gzip -r -9 -c ${TARGET_PATH} > OTA/${TARGET}.gz
-
-	MD5=$(md5sum OTA/${TARGET}.gz | awk '{print $1}' | cut -c1-5)
-	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.gz
+	tar -zcvf OTA/${TARGET}.tar.gz ${TARGET_PATH}
+	MD5=$(md5sum OTA/${TARGET}.tar.gz | awk '{print $1}' | cut -c1-5)
+	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.tar.gz
 
 	if [[ ! $(cat API_File 2> /dev/null | awk '{print $3}') =~ ${MD5} ]]
 	then
 		echo "Generating OTA for ${TARGET} ..."
-		mv -f OTA/${TARGET}.gz OTA/${OTA_PKG}
+		mv -f OTA/${TARGET}.tar.gz OTA/${OTA_PKG}
 		echo "OTA Package: ${OTA_PKG}"
 	else
 		echo "Nothing to be generated"
-		rm -f OTA/${TARGET}.gz
+		rm -f OTA/${TARGET}.tar.gz
 	fi
 done
