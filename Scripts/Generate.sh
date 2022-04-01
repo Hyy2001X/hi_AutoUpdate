@@ -39,8 +39,7 @@ do
 
 	MD5=$(md5sum OTA/${TARGET}.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.gz
-	
-	mv -f OTA/${TARGET}.gz OTA/${OTA_PKG}
+
 	if [[ ! $(cat API_File 2> /dev/null | awk '{print $3}') =~ ${MD5} ]]
 	then
 		echo "Generating OTA for ${TARGET} ..."
