@@ -7,7 +7,7 @@ OTA_VERSION=$(date +%Y%m%d%H%M%S)
 echo "Commit: ${GITHUB_SHA}
 
 ========================
-$(git show)
+$(git show ${GITHUB_SHA})
 $(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}')
 ========================
 "
