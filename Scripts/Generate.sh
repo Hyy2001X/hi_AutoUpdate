@@ -5,8 +5,9 @@ OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 mkdir -p OTA
 
+chown root:root -R OTA*
 chmod 777 -R OTA*
-du -a
+sudo du -a
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
 do
