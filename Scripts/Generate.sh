@@ -6,7 +6,7 @@ OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 echo "Commit: ${GITHUB_SHA}
 ======================
-$(git diff ${GITHUB_SHA} | grep 'diff' | grep OTA | awk '{print $3}')
+$(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}')
 ======================
 "
 mkdir -p OTA
@@ -18,7 +18,7 @@ do
 	MD5=$(md5sum OTA/${TARGET}.tar.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.tar.gz
 
-	if [[ $(git diff ${GITHUB_SHA} | grep 'diff' | grep OTA | awk '{print $3}') =~ ${TARGET_PATH} ]]
+	if [[ $(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}') =~ ${TARGET_PATH} ]]
 	then
 		echo "${TARGET}: Generating OTA version ${OTA_VERSION} ..."
 		mv -f OTA/${TARGET}.tar.gz OTA/${OTA_PKG}
