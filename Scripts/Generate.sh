@@ -5,6 +5,8 @@ OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 mkdir -p OTA
 
+ls -1 OLD_OTA
+
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
 do
 	TARGET=${TARGET_PATH/OTA_/}
