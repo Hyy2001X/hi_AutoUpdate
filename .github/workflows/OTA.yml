@@ -33,7 +33,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: output/*
         file_glob: true
-        tag: master
+        tag: OTA
         overwrite: true
 
     - name: Delete old Workflow Runs
