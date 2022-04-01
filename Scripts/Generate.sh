@@ -30,6 +30,8 @@ for i in $(seq 0 $(jq ".assets | length" API_Cache 2> /dev/null));do
 	esac
 done
 
+cat API_File
+
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
