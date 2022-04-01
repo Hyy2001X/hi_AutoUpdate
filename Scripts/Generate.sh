@@ -30,8 +30,8 @@ for i in $(seq 0 $(jq ".assets | length" API_Cache 2> /dev/null));do
 	esac
 done
 
-env
-set
+# env
+# set
 
 mkdir -p OTA
 
@@ -42,7 +42,7 @@ do
 	MD5=$(md5sum OTA/${TARGET}.tar.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.tar.gz
 
-	if [[ ! $(cat API_File 2> /dev/null | awk '{print $3}') =~ ${MD5} ]]
+	if [[ $(git show ${GITHUB_SHA} | grep 'diff' | awk '{print $3}') =~ ${TARGET} ]]
 	then
 		echo "Generating OTA for ${TARGET} ..."
 		mv -f OTA/${TARGET}.tar.gz OTA/${OTA_PKG}
