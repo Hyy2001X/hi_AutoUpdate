@@ -4,17 +4,12 @@ REPO=https://github.com/$1
 WORK=${GITHUB_WORKSPACE}
 OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
-git clone ${REPO} /tmp/$1
-cd /tmp/$1
 echo "Commit: ${GITHUB_SHA}
 
 ========================
-$(git show ${GITHUB_SHA} | grep 'diff' | awk '{print $3}')
+$(git show ${GITHUB_SHA} | grep 'diff --' | awk '{print $3}')
 ========================
 "
-cd -
-git pull
-ls -a -1
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
@@ -24,7 +19,7 @@ do
 	MD5=$(md5sum OTA/${TARGET}.tar.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.tar.gz
 
-	if [[ $(git show ${GITHUB_SHA} | grep 'diff' | awk '{print $3}') =~ ${TARGET_PATH} ]]
+	if [[ $(git show ${GITHUB_SHA} | grep 'diff --' | awk '{print $3}') =~ ${TARGET_PATH} ]]
 	then
 		echo "${TARGET}: Generating OTA version ${OTA_VERSION} ..."
 		mv -f OTA/${TARGET}.tar.gz OTA/${OTA_PKG}
