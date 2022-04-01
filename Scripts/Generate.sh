@@ -4,14 +4,16 @@ REPO=https://github.com/$1
 WORK=${GITHUB_WORKSPACE}
 OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
+git clone ${REPO} /tmp/$1
+cd /tmp/$1
 echo "Commit: ${GITHUB_SHA}
 
 ========================
-$(git version)
 $(git show ${GITHUB_SHA})
 $(git diff ${GITHUB_SHA} | grep 'diff' | awk '{print $3}')
 ========================
 "
+cd -
 mkdir -p OTA
 
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
