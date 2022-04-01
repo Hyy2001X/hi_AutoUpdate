@@ -4,7 +4,7 @@ WORK="${GITHUB_WORKSPACE}"
 OTA_VERSION=$(date +%Y%m%d%H%M%S)
 
 mkdir -p OTA
-
+sudo du ./ -a
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
 do
 	TARGET=${TARGET_PATH/OTA_/}
@@ -12,10 +12,10 @@ do
 
 	MD5=$(md5sum OTA/${TARGET}.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.gz
-	if [[ ! $(sudo ls -1 OTA-OLD) =~ ${MD5} ]]
-	then
-		mv -f OTA/${TARGET}.gz OTA/${OTA_PKG}
-	else
-		rm -f OTA/${TARGET}.gz
-	fi
+	#if [[ ! $(sudo ls -1 OTA-OLD) =~ ${MD5} ]]
+	#then
+	#	mv -f OTA/${TARGET}.gz OTA/${OTA_PKG}
+	#else
+	#	rm -f OTA/${TARGET}.gz
+	#fi
 done
