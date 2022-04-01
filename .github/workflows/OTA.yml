@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@main
 
     - name: Download Release
-      uses: thebritican/fetch-latest-release@v1
+      uses: thebritican/fetch-latest-release@v2.0.0
       with:
         github_token: ${{ github.token }}
 
