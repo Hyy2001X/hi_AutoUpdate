@@ -6,6 +6,13 @@
 name: OTA Generation
 
 on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      force_generate:
+        description: '强制生成 OTA 包'
+        default: 'false'
+
   #push:
   #  branches: 
   #    - master
@@ -28,7 +35,8 @@ jobs:
         sudo timedatectl set-timezone Asia/Shanghai
         git clone https://github.com/${{github.repository}} work
         cd work
-        bash $GITHUB_WORKSPACE/Scripts/Generate.sh ${{github.repository}}
+        [ "${{github.event.inputs.force_generate}}" == true ] && force_generate=true || force_generate=false
+        bash $GITHUB_WORKSPACE/Scripts/Generate.sh ${{github.repository}} ${force_generate}
 
     - name: Upload OTA Package
       uses: svenstaro/upload-release-action@v2
