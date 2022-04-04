@@ -17,10 +17,6 @@ for i in $(seq 0 $(jq ".assets | length" API_Cache 2> /dev/null));do
 		eval updated_at=$(jq ".assets[${i}].updated_at" API_Cache 2> /dev/null | sed 's/[-:TZ]//g')
 		eval download_count=$(jq ".assets[${i}].download_count" API_Cache 2> /dev/null)
 		[[ ! ${version} || ${version} == null ]] && version="-"
-		[[ ! ${browser_download_url} || ${browser_download_url} == null ]] && continue
-		[[ ! ${size} || ${size} == null || ${size} == 0 ]] && size="-" || size="${size}MB"
-		[[ ! ${updated_at} || ${updated_at} == null ]] && updated_at="-"
-		[[ ! ${download_count} || ${download_count} == null ]] && download_count="-"
 		[[ ! ${verify} || ${verify} == null ]] && verify="-"
 		printf "%-45s %-10s %-5s %-20s %-20s %-10s %-15s %s\n" ${name} ${download_count} ${verify} ${version} ${updated_at} ${size} ${browser_download_url} >> API_File
 	;;

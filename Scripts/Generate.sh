@@ -16,6 +16,7 @@ mkdir -p OTA
 for TARGET_PATH in $(ls -1 | grep 'OTA_')
 do
 	TARGET=${TARGET_PATH/OTA_/}
+	echo ${OTA_VERSION} > ${TARGET_PATH}/nasversion
 	tar -zcvf OTA/${TARGET}.tar.gz ${TARGET_PATH} > /dev/null 2>&1
 	MD5=$(md5sum OTA/${TARGET}.tar.gz | awk '{print $1}' | cut -c1-5)
 	OTA_PKG=OTA-${TARGET}-${OTA_VERSION}-${MD5}.tar.gz
